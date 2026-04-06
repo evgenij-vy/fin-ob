@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Evgen\FinOb;
 
 use Evgen\FinOb\Operation\AddOperation;
+use Evgen\FinOb\Operation\DivOperation;
+use Evgen\FinOb\Operation\MulOperation;
+use Evgen\FinOb\Operation\SubOperation;
 
 abstract class AbstractNumber
 {
@@ -20,6 +23,10 @@ abstract class AbstractNumber
     {
         if (!is_numeric($number)) {
             throw new \InvalidArgumentException('Number must be numeric');
+        }
+
+        if ($precision > 9) {
+            throw new \InvalidArgumentException('Precision must be less than 9');
         }
 
         $this->precision = $precision;
@@ -61,6 +68,21 @@ abstract class AbstractNumber
     public function add(AbstractNumber $number, ?int $precision = null): AbstractNumber
     {
         return $this->apply(AddOperation::execute($this, $number, $precision));
+    }
+
+    public function sub(AbstractNumber $number, ?int $precision = null): AbstractNumber
+    {
+        return $this->apply(SubOperation::execute($this, $number, $precision));
+    }
+
+    public function mul(AbstractNumber $number, ?int $precision = null): AbstractNumber
+    {
+        return $this->apply(MulOperation::execute($this, $number, $precision));
+    }
+
+    public function div(AbstractNumber $number, ?int $precision = null): AbstractNumber
+    {
+        return $this->apply(DivOperation::execute($this, $number, $precision));
     }
 
     // Internal functions

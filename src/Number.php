@@ -9,7 +9,7 @@ class Number extends AbstractNumber
     // Mutators
     public function changePrecision(int $precision): self
     {
-        $this->setData((int) round($this->getData() * $this->scale($precision - $this->getPrecision())));
+        $this->setData((int) round($this->getData() * $this->scale($precision - $this->precision)));
         $this->precision = $precision;
 
         return $this;
